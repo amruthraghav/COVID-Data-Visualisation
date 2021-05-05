@@ -11,9 +11,5 @@ https://systems.jhu.edu/
 * [VS Code](https://code.visualstudio.com/download), [Pycharm Community](https://www.jetbrains.com/pycharm/download) or your personal choice of IDE
 * Python packages required as stated in `requirements.txt`
 * Sign up [Heroku](https://www.heroku.com/) and [Mapbox](https://www.mapbox.com/)
-
-
-* Just clone this git, deploy to your own free Heroku server, and you are ready to go. Guide to deployment from [Heroku official Guide](https://dash.plotly.com/deployment)
-* Ensure all files and folders (except folder image) are deployed to Heroku server.
 * Remember to create your personal [mapbox access token.](https://www.mapbox.com/) and edit in `covid19.py`
 * Optional: Create your own [Addthis](https://www.addthis.com/) share button.

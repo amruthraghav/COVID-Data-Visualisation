@@ -1230,7 +1230,7 @@ app.layout = html.Div(
             [
                 html.Div([
                         html.Iframe(src="https://flo.uri.sh/visualisation/6053589/embed",
-                        style={"height": "600px", "width": "100%"},
+                        style={"height": "800px", "width": "100%"},
                      className="twelve columns"),
                     #  html.Iframe(src="https://flo.uri.sh/visualisation/1984087/embed",
                     #     style={"height": "600px", "width": "650px"},
@@ -1320,10 +1320,9 @@ app.layout = html.Div(
                         html.Hr(),
                         html.P('Source Code Hosted on  ',
                                style={'display': 'inline'}),
-                        html.A('Github @ amruthraghav ',
-                               href='https://github.com/amruthragahv'),
-                        html.P(' 2020.',
-                            style={'display': 'inline'}),
+                        html.A('Github',
+                               href='https://github.com/amruthragahv/COVID-Data-Visualisation'),
+                       
                         html.Hr(),
                     ], className="twelve columns",
                     style={'fontSize': 18, 'padding-top': 20}
