@@ -22,7 +22,7 @@ external_scripts = [{
     }]
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets, external_scripts = external_scripts)
-app.title = 'Covid19 Visualisation'
+app.title = 'CovTrack'
 
 #for heroku to run correctly
 server = app.server
@@ -225,12 +225,15 @@ def gen_map(map_data,zoom,lat,lon):
                                                    map_data['Confirmed'], map_data['Deaths'], map_data['Recovered'],
                                                     map_data['Confirmed_24hr'], map_data['Deaths_24hr'], map_data['Recovered_24hr'],)],
 
+            # "z" : list(map_data['Confirmed']),
             "mode": "markers",
             "name": list(map_data['Country/Region']),
             "marker": {
                     "opacity": 0.7,
-                    "size": np.log(map_data['Confirmed'])*4,
-            }
+                    "size": np.log(map_data['Confirmed'])*5,
+            },
+            # "range_color" : (map_data["Confirmed"].min(), map_data["Confirmed"].max())
+
         },
         
         ],
@@ -526,7 +529,7 @@ def draw_singleCountry_Scatter(df_confirmed_t,df_deaths_t,df_recovered_t,selecte
             traceorder="normal",
             font=dict(
                 family="sans-serif",
-                size=15,
+                size=12,
                 color=colors['figure_text']
             ),
             bgcolor=colors['background'],
@@ -553,9 +556,9 @@ def draw_singleCountry_Scatter(df_confirmed_t,df_deaths_t,df_recovered_t,selecte
 def draw_singleCountry_Bar(df_confirmed_t,df_deaths_t,df_recovered_t,selected_row=0,graph_line='Line Chart'):
     
 
-    df_confirmed_t = (df_confirmed_t - df_confirmed_t.shift(1)).drop(df_confirmed_t.index[0])
-    df_deaths_t = (df_deaths_t - df_deaths_t.shift(1)).drop(df_deaths_t.index[0])
-    df_recovered_t = (df_recovered_t - df_recovered_t.shift(1)).drop(df_recovered_t.index[0])
+    df_confirmed_t = (df_confirmed_t - df_confirmed_t.shift(1)).drop(df_confirmed_t.index[0]).abs()
+    df_deaths_t = (df_deaths_t - df_deaths_t.shift(1)).drop(df_deaths_t.index[0]).abs()
+    df_recovered_t = (df_recovered_t - df_recovered_t.shift(1)).drop(df_recovered_t.index[0]).abs()
         
     fig = go.Figure()
     if graph_line=='Line Chart':
@@ -610,7 +613,7 @@ def draw_singleCountry_Bar(df_confirmed_t,df_deaths_t,df_recovered_t,selected_ro
             traceorder="normal",
             font=dict(
                 family="sans-serif",
-                size=15,
+                size=12,
                 color=colors['figure_text']
             ),
             bgcolor=colors['background'],
@@ -638,7 +641,7 @@ app.layout = html.Div(
         # Header display
         html.Div(
             [
-                html.H1(children='STAT3622 Data Visualisation Covid-19 Outbreak Tracker',
+                html.H1(children='STAT3622 Data Visualisation CovTrack',
                         style={
                             'textAlign': 'left',
                             'color': colors['text'],
@@ -1295,10 +1298,10 @@ app.layout = html.Div(
             [
                 html.Div([
                         html.Iframe(src="https://flo.uri.sh/story/230085/embed",
-                        style={"height": "600px", "width": "45%"},
+                        style={"height": "600px", "width": "48%"},
                      className="twelve columns"),
                      html.Iframe(src="https://flo.uri.sh/story/230110/embed",
-                        style={"height": "600px", "width": "50%"},
+                        style={"height": "600px", "width": "48%"},
                      className="six columns")
                      ],),
                      html.Br(),
@@ -1328,11 +1331,46 @@ app.layout = html.Div(
             html.Div(
             [
                 html.Div([
-                        html.Iframe(src="https://public.domo.com/cards/31O7r",
-                        style={"height": "600px", "width": "45%"},
+                        html.Iframe(src="https://ourworldindata.org/grapher/full-list-covid-19-tests-per-day?time=earliest..latest", #", #https://public.domo.com/cards/31O7r
+                        style={"height": "600px", "width": "48%"},
                      className="twelve columns"),
-                     html.Iframe(src="https://public.domo.com/cards/2kO6J", #https://ourworldindata.org/grapher/full-list-cumulative-total-tests-per-thousand 
-                        style={"height": "600px", "width": "50%"},
+                     html.Iframe(src="https://ourworldindata.org/grapher/cumulative-covid-vaccinations?tab=map&time=2020-12-14",   #https://ourworldindata.org/grapher/full-list-total-tests-for-covid-19 #https://ourworldindata.org/grapher/full-list-cumulative-total-tests-per-thousand 
+                        style={"height": "600px", "width": "48%"},
+                     className="six columns")
+                    
+                     ],),
+                     html.Br(),
+                     html.Br(),
+            ], className="row",
+            style={
+                'textAlign': 'left',
+                'color': colors['text'],
+                'backgroundColor': colors['background'],
+            },
+         ),
+         html.Br(),
+            html.Br(),
+             html.Div(
+            [
+                html.H2(children='Covid-19 Lockdown and Shopping Data',
+                         style={
+                             'textAlign': 'center',
+                             'color': colors['text'],
+                             'backgroundColor': colors['background'],
+
+                         },
+                         className='row'
+                         ),
+                 ],  
+            ),
+            html.Div(
+            [
+                html.Div([
+                        html.Iframe(src="https://ourworldindata.org/grapher/stay-at-home-covid", #", #https://public.domo.com/cards/31O7r
+                        style={"height": "600px", "width": "48%"},
+                     className="twelve columns"),
+                     html.Iframe(src="https://ourworldindata.org/grapher/change-visitors-grocery-stores?tab=chart",   #https://ourworldindata.org/grapher/full-list-total-tests-for-covid-19 #https://ourworldindata.org/grapher/full-list-cumulative-total-tests-per-thousand 
+                        style={"height": "600px", "width": "48%"},
                      className="six columns")
                     
                      ],),
