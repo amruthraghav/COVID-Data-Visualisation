@@ -267,14 +267,16 @@ fig = px.treemap(map_data.sort_values(by='Confirmed', ascending=False).reset_ind
                  title='Number of Confirmed Cases',
                  color_discrete_sequence = px.colors.qualitative.Prism,template="plotly_dark")
 fig.data[0].textinfo = 'label+text+value'
-fig.update_layout(margin=dict(t=80,l=0,r=0,b=0))
+fig.update_layout(margin=dict(t=80,l=0,r=0,b=0),paper_bgcolor=colors['background'],
+        plot_bgcolor=colors['background'])
 
 fig2 = px.treemap(map_data.sort_values(by='Deaths', ascending=False).reset_index(drop=True), 
                  path=["Country/Region"], values="Deaths", height=700,
                  title='Number of Deaths',
                  color_discrete_sequence = px.colors.qualitative.Prism,template="plotly_dark")
 fig2.data[0].textinfo = 'label+text+value'
-fig2.update_layout(margin=dict(t=80,l=0,r=0,b=0))
+fig2.update_layout(margin=dict(t=80,l=0,r=0,b=0),paper_bgcolor=colors['background'],
+        plot_bgcolor=colors['background'])
 
 
 
@@ -395,8 +397,8 @@ def draw_global_graph(df_confirmed_total,df_deaths_total,df_recovered_total,grap
     fig.update_layout(
         hovermode='x',
         font=dict(
-            family="Courier New, monospace",
-            size=14,
+            family="sans-serif",
+            size=20,
             color=colors['figure_text'],
         ),
         legend=dict(
@@ -405,7 +407,7 @@ def draw_global_graph(df_confirmed_total,df_deaths_total,df_recovered_total,grap
             traceorder="normal",
             font=dict(
                 family="sans-serif",
-                size=12,
+                size=15,
                 color=colors['figure_text']
             ),
             bgcolor=colors['background'],
@@ -418,7 +420,7 @@ def draw_global_graph(df_confirmed_total,df_deaths_total,df_recovered_total,grap
                     t=0, 
                     b=0
                     ),
-        height=300,
+        height=500,
 
     )
     fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor='#3A3A3A')
@@ -443,8 +445,8 @@ def draw_highest_10(df_confirmed_t_stack, df_deaths_t_stack, graphHigh10_type='C
         xaxis_title=None,
         yaxis_title=None,
         font=dict(
-            family="Courier New, monospace",
-            size=14,
+            family="sans-serif",
+            size=20,
             color=colors['figure_text'],
         ),
         legend=dict(
@@ -453,7 +455,7 @@ def draw_highest_10(df_confirmed_t_stack, df_deaths_t_stack, graphHigh10_type='C
             traceorder="normal",
             font=dict(
                 family="sans-serif",
-                size=9,
+                size=14,
                 color=colors['figure_text']
             ),
         ),
@@ -464,7 +466,7 @@ def draw_highest_10(df_confirmed_t_stack, df_deaths_t_stack, graphHigh10_type='C
                     t=0, 
                     b=0
                     ),
-        height=300,
+        height=500,
 
     )
     fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor='#3A3A3A')
@@ -514,15 +516,17 @@ def draw_singleCountry_Scatter(df_confirmed_t,df_deaths_t,df_recovered_t,selecte
         title=title + ' (Total Cases)',
         hovermode='x',
         font=dict(
-            family="Courier New, monospace",
-            size=14,
+            family="sans-serif",
+            size=20,
             color="#ffffff",
         ),
         legend=dict(
+             x=0.02,
+            y=1,
             traceorder="normal",
             font=dict(
                 family="sans-serif",
-                size=12,
+                size=15,
                 color=colors['figure_text']
             ),
             bgcolor=colors['background'],
@@ -531,7 +535,7 @@ def draw_singleCountry_Scatter(df_confirmed_t,df_deaths_t,df_recovered_t,selecte
         paper_bgcolor=colors['background'],
         plot_bgcolor=colors['background'],
         margin=dict(l=0, r=0, t=65, b=0),
-        height=350,
+        height=500,
 
     )
     fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor='#3A3A3A')
@@ -596,15 +600,17 @@ def draw_singleCountry_Bar(df_confirmed_t,df_deaths_t,df_recovered_t,selected_ro
         barmode='stack',
         hovermode='x',
         font=dict(
-            family="Courier New, monospace",
-            size=14,
+            family="sans-serif",
+            size=20,
             color="#ffffff",
         ),
         legend=dict(
+             x=0.02,
+            y=1,
             traceorder="normal",
             font=dict(
                 family="sans-serif",
-                size=12,
+                size=15,
                 color=colors['figure_text']
             ),
             bgcolor=colors['background'],
@@ -613,7 +619,7 @@ def draw_singleCountry_Bar(df_confirmed_t,df_deaths_t,df_recovered_t,selected_ro
         paper_bgcolor=colors['background'],
         plot_bgcolor=colors['background'],
         margin=dict(l=0, r=0, t=65, b=0),
-        height=350,
+        height=500,
     )
 
     fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor='#3A3A3A')
@@ -710,14 +716,16 @@ app.layout = html.Div(
                          )
             ], className="row"
         ),
-
+        html.Br(),
+        html.Br(),
         # Top column display of confirmed, death and recovered total numbers
         html.Div([
             html.Div([
-                html.H4(children='Total Cases: ',
+                html.H4(children='Total Confirmed Cases: ',
                        style={
                            'textAlign': 'center',
                            'color': colors['confirmed_text'],
+                           'font-weight': 'bold'
                        }
                        ),
                 html.P(f"{df_confirmed_total[-1]:,d}",
@@ -725,6 +733,7 @@ app.layout = html.Div(
                     'textAlign': 'center',
                     'color': colors['confirmed_text'],
                     'fontSize': 30,
+                    'font-weight': 'bold'
                 }
                 ),
                 html.P('Past 24hrs increase: +' + f"{df_confirmed_total[-1] - df_confirmed_total[-2]:,d}"
@@ -733,7 +742,8 @@ app.layout = html.Div(
                     'textAlign': 'center',
                     'color': colors['confirmed_text'],
                     'padding-bottom': 10,
-                # 'padding-top': 10,
+                     'padding-top': 10,
+                     'font-weight': 'bold'
                 }
                 ),
             ],
@@ -746,6 +756,7 @@ app.layout = html.Div(
                        style={
                            'textAlign': 'center',
                            'color': colors['deaths_text'],
+                           'font-weight': 'bold'
                        }
                        ),
                 html.P(f"{df_deaths_total[-1]:,d}",
@@ -753,12 +764,16 @@ app.layout = html.Div(
                     'textAlign': 'center',
                     'color': colors['deaths_text'],
                     'fontSize': 30,
+                    'font-weight': 'bold'
                 }
                 ),
                 html.P('Mortality Rate: ' + str(round(df_deaths_total[-1]/df_confirmed_total[-1] * 100, 3)) + '%',
                        style={
                     'textAlign': 'center',
-                    'color': colors['deaths_text'],'padding-bottom': 10,
+                    'color': colors['deaths_text'],
+                    'padding-bottom': 10,
+                    'padding-top': 10,
+                    'font-weight': 'bold'
                 }
                 ),
             ],
@@ -769,6 +784,7 @@ app.layout = html.Div(
                        style={
                            'textAlign': 'center',
                            'color': colors['recovered_text'],
+                           'font-weight': 'bold'
                        }
                        ),
                 html.P(f"{df_recovered_total[-1]:,d}",
@@ -776,12 +792,16 @@ app.layout = html.Div(
                     'textAlign': 'center',
                     'color': colors['recovered_text'],
                     'fontSize': 30,
+                    'font-weight': 'bold'
                 }
                 ),
                 html.P('Recovery Rate: ' + str(round(df_recovered_total[-1]/df_confirmed_total[-1] * 100, 3)) + '%',
                        style={
                     'textAlign': 'center',
-                    'color': colors['recovered_text'],'padding-bottom': 10,
+                    'color': colors['recovered_text'],
+                    'padding-bottom': 10,
+                    'padding-top': 10,
+                    'font-weight': 'bold'
                 }
                 ),
             ],
@@ -790,9 +810,11 @@ app.layout = html.Div(
         ], className='row'),
 
          # Graph of total confirmed, recovered and deaths
+         html.Br(),
+         html.Br(),
         html.Div(
             [
-                html.H2(children='Global Covid-19 cases',
+                html.H2(children='Evolution of Covid-19 Cases around the World',
                          style={
                              'textAlign': 'center',
                              'color': colors['text'],
@@ -803,6 +825,8 @@ app.layout = html.Div(
                          ),
                  ],  
         ),
+                 html.Br(),
+                          html.Br(),
         html.Div(
             [
                 html.Div([
@@ -822,7 +846,8 @@ app.layout = html.Div(
                 'backgroundColor': colors['background'],
             },
         ),
-
+         html.Br(),
+         html.Br(),
         # Graph of total confirmed, recovered and deaths
         html.Div(
             [
@@ -835,7 +860,7 @@ app.layout = html.Div(
                          },
                          className='twelve columns'
                          ),
-                html.Div([html.H5(children='Time Series of Number of Cases',
+                html.Div([html.H4(children='Time Series of Number of Cases',
                          style={
                              'textAlign': 'center',
                              'color': colors['text'],
@@ -851,13 +876,13 @@ app.layout = html.Div(
                         value='Total Cases',
                         labelStyle={'display': 'inline-block'},
                         style={
-                            'fontSize': 15,
+                            'fontSize': 20,
                          },
                         
                     )
                 ],className='six columns'
                 ),
-                                html.Div([html.H5(children='Cases in 10 Top Worstly Affected Countries',
+                                html.Div([html.H4(children='Cases in 10 Top Badly Affected Countries',
                          style={
                              'textAlign': 'center',
                              'color': colors['text'],
@@ -873,7 +898,7 @@ app.layout = html.Div(
                         value='Confirmed Cases',
                         labelStyle={'display': 'inline-block'},
                         style={
-                            'fontSize': 15,
+                            'fontSize': 20,
                          },
                         
                     )
@@ -903,7 +928,7 @@ app.layout = html.Div(
         ),
         html.Div(
             [html.Br(),html.Br(),
-                html.H2(children='Global Covid-19 cases',
+                html.H2(children='Top 10 Badly Affected Countries',
                          style={
                              'textAlign': 'center',
                              'color': colors['text'],
@@ -924,7 +949,7 @@ app.layout = html.Div(
                     html.Br(),
                     html.Span(' + past 24hrs',
                              style={'color': colors['confirmed_text'],
-                             'fontWeight': 'bold','fontSize': 14,}),html.Br(),
+                             'fontWeight': 'bold','fontSize': 17,}),html.Br(),
                     ],
                     style={
                         'textAlign': 'center',
@@ -932,7 +957,7 @@ app.layout = html.Div(
                         'fontsize':12,
                         'backgroundColor':'#3B5998',
                         'borderRadius': '15px',
-                        'fontSize': 17,
+                        'fontSize': 20,
                         'padding-bottom': 10,
                         'padding-top': 10
                         }       
@@ -948,7 +973,7 @@ app.layout = html.Div(
                     html.Br(),
                     html.Span(' + past 24hrs',
                              style={'color': colors['confirmed_text'],
-                             'fontWeight': 'bold','fontSize': 14,}),html.Br(),
+                             'fontWeight': 'bold','fontSize': 17,}),html.Br(),
                     ],
                     style={
                         'textAlign': 'center',
@@ -956,7 +981,7 @@ app.layout = html.Div(
                         'fontsize':12,
                         'backgroundColor':'#3B5998',
                         'borderRadius': '15px',
-                        'fontSize': 17,
+                        'fontSize': 20,
                         'padding-bottom': 10,
                         'padding-top': 10
                         }       
@@ -973,7 +998,7 @@ app.layout = html.Div(
                     html.Br(),
                     html.Span(' + past 24hrs',
                              style={'color': '#f2786f',
-                             'fontWeight': 'bold','fontSize': 14,}),html.Br(),
+                             'fontWeight': 'bold','fontSize': 17,}),html.Br(),
                     ],
                     style={
                         'textAlign': 'center',
@@ -981,7 +1006,7 @@ app.layout = html.Div(
                         'fontsize':12,
                         'backgroundColor':'#ab2c1a',
                         'borderRadius': '12px',
-                        'fontSize': 17,
+                        'fontSize': 20,
                         'padding-bottom': 10,
                         'padding-top': 10
                         }       
@@ -998,7 +1023,7 @@ app.layout = html.Div(
                     html.Br(),
                     html.Span(' + past 24hrs',
                              style={'color': '#f2786f',
-                             'fontWeight': 'bold','fontSize': 14,}),html.Br(),
+                             'fontWeight': 'bold','fontSize': 17,}),html.Br(),
                     ],
                     style={
                         'textAlign': 'center',
@@ -1006,7 +1031,7 @@ app.layout = html.Div(
                         'fontsize':12,
                         'backgroundColor':'#ab2c1a',
                         'borderRadius': '12px',
-                        'fontSize': 17,
+                        'fontSize': 20,
                         'padding-bottom': 10,
                         'padding-top': 10
                         }       
@@ -1070,10 +1095,10 @@ app.layout = html.Div(
                                 'backgroundColor': 'rgb(100, 100, 100)',
                                 'color': colors['text'],
                                 'maxWidth': 0,
-                                'fontSize':14,
+                                'fontSize':20,
                             },
                             style_table={
-                                'maxHeight': '350px',
+                                'maxHeight': '500px',
                                 'overflowY': 'auto'
                             },
                             style_data={
@@ -1213,6 +1238,8 @@ app.layout = html.Div(
                 'backgroundColor': colors['background'],
             },
         ),
+         html.Br(),
+            html.Br(),
              html.Div(
             [
                 html.H2(children='Covid-19 Growth Trajectory',
@@ -1226,6 +1253,8 @@ app.layout = html.Div(
                          ),
                  ],  
             ),
+             html.Br(),
+            html.Br(),
             html.Div(
             [
                 html.Div([
@@ -1260,14 +1289,16 @@ app.layout = html.Div(
                          ),
                  ],  
             ),
+             html.Br(),
+            html.Br(),
             html.Div(
             [
                 html.Div([
                         html.Iframe(src="https://flo.uri.sh/story/230085/embed",
-                        style={"height": "600px", "width": "40%"},
+                        style={"height": "600px", "width": "45%"},
                      className="twelve columns"),
                      html.Iframe(src="https://flo.uri.sh/story/230110/embed",
-                        style={"height": "600px", "width": "55%"},
+                        style={"height": "600px", "width": "50%"},
                      className="six columns")
                      ],),
                      html.Br(),
@@ -1298,10 +1329,10 @@ app.layout = html.Div(
             [
                 html.Div([
                         html.Iframe(src="https://public.domo.com/cards/31O7r",
-                        style={"height": "600px", "width": "55%"},
+                        style={"height": "600px", "width": "45%"},
                      className="twelve columns"),
                      html.Iframe(src="https://public.domo.com/cards/2kO6J", #https://ourworldindata.org/grapher/full-list-cumulative-total-tests-per-thousand 
-                        style={"height": "600px", "width": "40%"},
+                        style={"height": "600px", "width": "50%"},
                      className="six columns")
                     
                      ],),
