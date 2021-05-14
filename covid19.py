@@ -782,7 +782,7 @@ app.layout = html.Div(
             ],
                 style=divBorderStyle,
                 className='four columns'),
-            html.Div([
+                html.Div([
                 html.H4(children='Total Recovered: ',
                        style={
                            'textAlign': 'center',
@@ -810,6 +810,8 @@ app.layout = html.Div(
             ],
                 style=divBorderStyle,
                 className='four columns'),
+                
+
         ], className='row'),
 
          # Graph of total confirmed, recovered and deaths
@@ -1384,13 +1386,14 @@ app.layout = html.Div(
             },
          ),
             
+            
             html.Div(
                     [
                         html.Hr(),
                         html.P('Source Code Hosted on  ',
                                style={'display': 'inline'}),
                         html.A('Github',
-                               href='https://github.com/amruthragahv/COVID-Data-Visualisation'),
+                               href='https://github.com/amruthraghav/COVID-Data-Visualisation'),
                        
                         html.Hr(),
                     ], className="twelve columns",
